@@ -14,7 +14,10 @@ import {
   SelectDetailsWrapper,
   SelectDetail,
 } from './styles/select.styles';
+// mui
 import { useTheme } from '@mui/material';
+
+// ----------------------------------------------------------------------
 
 const Select = ({
   label,
@@ -27,6 +30,8 @@ const Select = ({
   selectValue = 'name',
   outerStyles = {},
   innerStyles = {},
+  disabledInput = false,
+  classes = '',
 }) => {
   const {
     palette: {
@@ -34,16 +39,28 @@ const Select = ({
       text: { disabled },
     },
   } = useTheme();
-  const [selectedValue, setSelectedValue] = useState(defaultValue);
+
+  const getNestedValue = (object, path) => {
+    return path.split('.').reduce((acc, key) => acc && acc[key], object);
+  };
+
+  const value =
+    defaultValue ||
+    values.filter(
+      (value) => value[selectKey] === getNestedValue(formik?.values, name)
+    )?.[0]?.[selectValue];
+  const errorMessage = getNestedValue(formik?.errors, name);
+  const isTouched = getNestedValue(formik?.touched, name);
+  const isError = isTouched && errorMessage?.length > 0;
+
+  const [selectedValue, setSelectedValue] = useState(value);
   const [isOpen, setIsOpen] = useState(false);
 
-  const isError = formik.errors[name] && formik.touched[name];
-
   useEffect(() => {
-    if (defaultValue) {
-      setSelectedValue(defaultValue);
+    if (value) {
+      setSelectedValue(value);
     }
-  }, [defaultValue]);
+  }, [value]);
 
   return (
     <div className='position-relative'>
@@ -51,6 +68,7 @@ const Select = ({
       <SelectButton
         style={outerStyles}
         type='button'
+        className={classes}
         onClick={() => setIsOpen(!isOpen)}
       >
         <SelectWrapper className='w-100'>
@@ -63,15 +81,17 @@ const Select = ({
           )}
           <SelectValue
             style={selectedValue ? {} : { color: disabled, opacity: 1 }}
-            className={image && 'ms-2'}
+            className={`${image ? 'ms-2' : ''}`}
             variant='body3'
           >
             {selectedValue || label || ''}
           </SelectValue>
         </SelectWrapper>
-        <SelectArrow>
-          <KeyboardArrowDown width={'16px'} height={'16px'} />
-        </SelectArrow>
+        {!disabledInput && (
+          <SelectArrow>
+            <KeyboardArrowDown width={'16px'} height={'16px'} />
+          </SelectArrow>
+        )}
       </SelectButton>
       {isOpen && (
         <SelectDetailsContainer style={innerStyles}>

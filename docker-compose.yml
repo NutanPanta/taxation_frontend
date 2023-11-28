@@ -2,6 +2,11 @@ version: '3.3'
 
 services:
   web:
+    build: ./
+    restart: always
     image: taxation:latest
     ports:
-      - 8080:8080
+      - 8080:80
+    environment:
+      - REACT_APP_END_POINT=${REACT_APP_END_POINT}
+      - NODE_ENV=${NODE_ENV}

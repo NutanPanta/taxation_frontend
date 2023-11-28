@@ -6,6 +6,8 @@ import {
   LabeledTextAreaInput,
 } from './styles/labeledInput.styled';
 
+// ----------------------------------------------------------------------
+
 const LabeledInput = ({
   name,
   label,
@@ -17,6 +19,7 @@ const LabeledInput = ({
   helperText,
   outerStyles = {},
   styles = {},
+  classes = '',
   inputWrapperStyles = {},
   disabled = false,
   margin = true,
@@ -29,6 +32,7 @@ const LabeledInput = ({
   const errorMessage = getNestedValue(formik?.errors, name);
   const isTouched = getNestedValue(formik?.touched, name);
   const isError = isTouched && errorMessage?.length > 0;
+
   return (
     <Box className={margin ? 'mb-3' : ''} sx={outerStyles}>
       <LabeledInputLabel htmlFor={name} className='form-label'>
@@ -45,18 +49,22 @@ const LabeledInput = ({
               value={value || ''}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
-              className={`border ${isError && 'border-danger text-danger'}`}
+              className={`border ${
+                isError ? 'border-danger text-danger' : ''
+              } ${classes}`}
               style={styles}
             />
           ) : (
             <LabeledTextInput
               name={name}
-              type={type}
+              type={disabled ? 'text' : type}
               placeholder={placeholder || label}
               value={value || ''}
               onChange={formik?.handleChange}
               onBlur={formik?.handleBlur}
-              className={`border ${isError && 'border-danger text-danger'}`}
+              className={`border ${
+                isError ? 'border-danger text-danger' : ''
+              } ${classes}`}
               style={styles}
               disabled={disabled}
             />
