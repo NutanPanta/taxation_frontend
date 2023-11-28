@@ -35,7 +35,7 @@ const refreshToken = async (refresh, args, api, extraOptions) => {
 
   if (response?.error) {
     logoutUser(api.dispatch);
-    return;
+    return response;
   }
 
   // store new token
@@ -64,15 +64,7 @@ const baseQueryWithAuthValidation = async (args, api, extraOptions) => {
   return response;
 };
 
-export const apiTags = [
-  'Dashboard',
-  'Scans',
-  'Scan',
-  'Favourites',
-  'Schedules',
-  'Schedule',
-  'DemoRequests',
-];
+export const apiTags = ['TaxDocs'];
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithAuthValidation,
