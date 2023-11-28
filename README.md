@@ -32,6 +32,14 @@ NODE_ENV=development or production
 
 You can set these variables in a .env file in the root of the project.
 
+## Building Docker Image
+
+`docker build -t taxation .`
+
+or
+
+`docker compose up`
+
 ## Building for Production
 
 To build the project for production, run:
