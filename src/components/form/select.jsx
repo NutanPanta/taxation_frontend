@@ -29,7 +29,10 @@ const Select = ({
   innerStyles = {},
 }) => {
   const {
-    palette: { primary },
+    palette: {
+      primary,
+      text: { disabled },
+    },
   } = useTheme();
   const [selectedValue, setSelectedValue] = useState(defaultValue);
   const [isOpen, setIsOpen] = useState(false);
@@ -58,7 +61,13 @@ const Select = ({
               </SelectIcon>
             </SelectIconWrapper>
           )}
-          <SelectValue className={image && 'ms-2'}>{selectedValue}</SelectValue>
+          <SelectValue
+            style={selectedValue ? {} : { color: disabled, opacity: 1 }}
+            className={image && 'ms-2'}
+            variant='body3'
+          >
+            {selectedValue || label || ''}
+          </SelectValue>
         </SelectWrapper>
         <SelectArrow>
           <KeyboardArrowDown width={'16px'} height={'16px'} />

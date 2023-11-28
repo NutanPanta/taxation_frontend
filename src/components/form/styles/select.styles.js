@@ -1,4 +1,4 @@
-import { Card } from '@mui/material';
+import { Card, Typography } from '@mui/material';
 import styled from 'styled-components';
 
 export const SelectLabel = styled.label`
@@ -6,8 +6,7 @@ export const SelectLabel = styled.label`
   font-size: 16px;
   line-height: 18px;
   font-weight: 600;
-  color: rgb(145, 158, 171);
-  margin-bottom: 0.5rem;
+  margin-bottom: 1.4rem;
 `;
 
 export const SelectButton = styled.button`
@@ -45,7 +44,7 @@ export const SelectIcon = styled.svg`
   height: 100%;
 `;
 
-export const SelectValue = styled.span`
+export const SelectValue = styled(Typography)`
   font-size: 18px;
   line-height: 1.5;
   color: inherit;

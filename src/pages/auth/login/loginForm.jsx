@@ -31,31 +31,27 @@ const LoginForm = () => {
     onSubmit: async (values) => {
       await new Promise((resolve) => setTimeout(resolve, 500));
 
-      try {
-        const response = await loginUser({
-          data: { email: values.email, password: values.password },
-        });
+      const response = await loginUser({
+        data: { email: values.email, password: values.password },
+      });
 
-        const error = response.error;
+      const error = response.error;
 
-        if (error) {
-          const errorMessage =
-            error?.status === 401 || error?.status === 400
-              ? 'Invalid Email or Password'
-              : error?.data?.detail || 'Internal Server Error';
-          setErrorMessage(errorMessage);
-          return;
-        }
-
-        dispatch(login(response?.data));
-
-        // Store tokens in local storage
-        localStorage.setItem('access', response?.data?.access);
-        values.is_checked &&
-          localStorage.setItem('refresh', response?.data?.refresh);
-      } catch (error) {
-        console.log(error);
+      if (error) {
+        const errorMessage =
+          error?.status === 401 || error?.status === 400
+            ? 'Invalid Email or Password'
+            : error?.data?.detail || 'Internal Server Error';
+        setErrorMessage(errorMessage);
+        return;
       }
+
+      dispatch(login(response?.data));
+
+      // Store tokens in local storage
+      localStorage.setItem('access', response?.data?.access);
+      values.is_checked &&
+        localStorage.setItem('refresh', response?.data?.refresh);
     },
     validationSchema: Yup.object().shape({
       email: Yup.string().required('Username cannot be empty'),

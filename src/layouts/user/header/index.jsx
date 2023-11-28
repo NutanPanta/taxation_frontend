@@ -58,7 +58,7 @@ const Header = ({ onToggleSidebar }) => {
               to={PATH_AFTER_LOGIN}
             >
               <SidebarHeaderLogo>
-                <img src={Logo} alt='' />
+                <Logo />
               </SidebarHeaderLogo>
             </RouterLink>
           </Box>
