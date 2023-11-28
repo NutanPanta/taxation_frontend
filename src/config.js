@@ -40,3 +40,30 @@ export const defaultSettings = {
   themeColorPresets: 'default',
   backgroundBlur: false,
 };
+
+// TAX DOCS
+export const DEDUCTION_CHOICES = {
+  standard: 'Standard Deduction',
+  itemized: 'Itemized Deductions',
+  education: 'Educational Expenses',
+  business: 'Business Expenses',
+  hsa: 'Health Savings Account (HSA) Contributions',
+  retirement: 'Retirement Contributions',
+  job_related: 'Job-Related Expenses',
+};
+
+export const INCOME_CHOICES = {
+  self_employment: 'Self-Employment Income',
+  rental: 'Rental Income',
+  interest: 'Interest Income',
+  dividend: 'Dividend Income',
+  capital_gains: 'Capital Gains',
+  royalties: 'Royalties',
+  alimony: 'Alimony',
+  business: 'Business Income',
+  unemployment_compensation: 'Unemployment Compensation',
+  social_security: 'Social Security Benefits',
+  pension: 'Pension Income',
+  gambling_winnings: 'Gambling Winnings',
+  prizes_awards: 'Prizes and Awards',
+};

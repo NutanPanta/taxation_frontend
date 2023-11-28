@@ -23,11 +23,6 @@ const baseQuery = fetchBaseQuery({
 });
 
 const refreshToken = async (refresh, args, api, extraOptions) => {
-  if (!refresh) {
-    logoutUser(api.dispatch);
-    return;
-  }
-
   let response = await baseQuery(
     {
       url: `${HOST_API}/token/refresh/`,
@@ -40,7 +35,7 @@ const refreshToken = async (refresh, args, api, extraOptions) => {
 
   if (response?.error) {
     logoutUser(api.dispatch);
-    return;
+    return response;
   }
 
   // store new token
@@ -58,21 +53,18 @@ const baseQueryWithAuthValidation = async (args, api, extraOptions) => {
 
   const refresh = api.getState().auth.refresh;
 
-  if (status === 401)
-    response = await refreshToken(refresh, args, api, extraOptions);
+  if (status === 401) {
+    if (!refresh) {
+      logoutUser(api.dispatch);
+    } else {
+      response = await refreshToken(refresh, args, api, extraOptions);
+    }
+  }
 
   return response;
 };
 
-export const apiTags = [
-  'Dashboard',
-  'Scans',
-  'Scan',
-  'Favourites',
-  'Schedules',
-  'Schedule',
-  'DemoRequests',
-];
+export const apiTags = ['TaxDocs'];
 
 export const apiSlice = createApi({
   baseQuery: baseQueryWithAuthValidation,
