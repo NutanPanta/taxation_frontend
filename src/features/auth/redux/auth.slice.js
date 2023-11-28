@@ -22,8 +22,6 @@ export const authSlice = createSlice({
       const {
         isAuthenticated,
         user,
-        access,
-        refresh,
         isLoadingScreenLoaded = false,
       } = action.payload;
 
@@ -32,8 +30,6 @@ export const authSlice = createSlice({
         isAuthenticated,
         isInitialized: true,
         user,
-        access,
-        refresh,
         isLoadingScreenLoaded,
       };
     },

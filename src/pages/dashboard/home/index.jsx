@@ -13,7 +13,6 @@ const Home = () => {
   const steps = [
     'Account Setup',
     'Provide tax docs',
-    'Provide Missing info',
     'Tax Return In Progress',
     'Review',
     'Esign',

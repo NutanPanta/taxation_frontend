@@ -23,11 +23,6 @@ const baseQuery = fetchBaseQuery({
 });
 
 const refreshToken = async (refresh, args, api, extraOptions) => {
-  if (!refresh) {
-    logoutUser(api.dispatch);
-    return;
-  }
-
   let response = await baseQuery(
     {
       url: `${HOST_API}/token/refresh/`,
@@ -58,8 +53,13 @@ const baseQueryWithAuthValidation = async (args, api, extraOptions) => {
 
   const refresh = api.getState().auth.refresh;
 
-  if (status === 401)
-    response = await refreshToken(refresh, args, api, extraOptions);
+  if (status === 401) {
+    if (!refresh) {
+      logoutUser(api.dispatch);
+    } else {
+      response = await refreshToken(refresh, args, api, extraOptions);
+    }
+  }
 
   return response;
 };

@@ -21,9 +21,13 @@ const LabeledInput = ({
   disabled = false,
   margin = true,
 }) => {
-  const value = currentValue || formik?.values?.[name];
-  const errorMessage = formik?.errors?.[name];
-  const isTouched = formik?.touched?.[name];
+  const getNestedValue = (object, path) => {
+    return path.split('.').reduce((acc, key) => acc && acc[key], object);
+  };
+
+  const value = currentValue || getNestedValue(formik?.values, name);
+  const errorMessage = getNestedValue(formik?.errors, name);
+  const isTouched = getNestedValue(formik?.touched, name);
   const isError = isTouched && errorMessage?.length > 0;
   return (
     <Box className={margin ? 'mb-3' : ''} sx={outerStyles}>
@@ -60,9 +64,9 @@ const LabeledInput = ({
         </Box>
         {isError ? (
           <FormHelperText error>{errorMessage}</FormHelperText>
-        ) : (
-          <FormHelperText>{helperText || ' '}</FormHelperText>
-        )}
+        ) : helperText ? (
+          <FormHelperText>{helperText}</FormHelperText>
+        ) : null}
       </div>
     </Box>
   );

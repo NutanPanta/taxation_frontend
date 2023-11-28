@@ -1,5 +1,4 @@
 // reducers
-import { logout } from '../redux/auth.slice';
 import { apiSlice, apiTags } from '@/app/apiSlice';
 
 export const logoutUser = async (dispatch) => {
